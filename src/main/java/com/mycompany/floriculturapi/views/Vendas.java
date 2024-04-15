@@ -37,7 +37,7 @@ public class Vendas extends javax.swing.JFrame {
         jSpinner1 = new javax.swing.JSpinner();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblVendas = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -77,7 +77,7 @@ public class Vendas extends javax.swing.JFrame {
         jButton1.setText("Adicionar");
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 60, 120, 30));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblVendas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -85,10 +85,18 @@ public class Vendas extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Produto", "Tipo", "Quantidade", "Valor"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblVendas);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 480, 220));
 
@@ -242,12 +250,12 @@ public class Vendas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbCpf;
     private javax.swing.JMenuItem mnuManutencaoCliente;
     private javax.swing.JMenuItem mnuManutencaoProduto;
     private javax.swing.JMenuItem mnuMenu;
     private javax.swing.JMenuItem mnuRelatorios;
+    private javax.swing.JTable tblVendas;
     private javax.swing.JTextField txtCPF;
     // End of variables declaration//GEN-END:variables
 }

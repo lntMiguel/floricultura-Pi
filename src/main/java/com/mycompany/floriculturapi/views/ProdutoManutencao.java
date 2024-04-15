@@ -332,7 +332,16 @@ public class ProdutoManutencao extends javax.swing.JFrame {
                    txtNome.setText(objAlterar.getNomeProduto());
                    spnQtd.getModel().setValue(objAlterar.getQtdProduto());
                    txtPreco.setText(Float.toString(objAlterar.getPrecoProduto()));
-                  
+                   
+                   switch (tipo){
+                       case "Flor" -> cbTipo.setSelectedIndex(0);
+                        
+                       case "Planta" -> cbTipo.setSelectedIndex(1);
+                       
+                       case "Substrato" -> cbTipo.setSelectedIndex(2);
+                       
+                       case "Acessório p/ Jardim" -> cbTipo.setSelectedIndex(3);
+                   }
            
           
        }

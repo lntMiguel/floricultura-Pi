@@ -11,11 +11,12 @@ public class Cliente {
     private String enderecoCliente;
     private Date dataNasc;
     private String sexoCliente;
-
+    private String estadoCivil;
+    
     public Cliente() {
     }
 
-    public Cliente(int idCliente, String CPF, String nomeCliente, String emailCliente, String telefoneCliente, String enderecoCliente, Date dataNasc, String sexoCliente) {
+    public Cliente(int idCliente, String CPF, String nomeCliente, String emailCliente, String telefoneCliente, String enderecoCliente, Date dataNasc, String sexoCliente, String estadoCivil) {
         
         this.idCliente = idCliente;
         this.CPF = CPF;
@@ -25,9 +26,10 @@ public class Cliente {
         this.enderecoCliente = enderecoCliente;
         this.dataNasc = dataNasc;
         this.sexoCliente = sexoCliente;
+        this.estadoCivil = estadoCivil;
     }
 
-    public Cliente(String CPF, String nomeCliente, String emailCliente, String telefoneCliente, String enderecoCliente, Date dataNasc, String sexoCliente) {
+    public Cliente(String CPF, String nomeCliente, String emailCliente, String telefoneCliente, String enderecoCliente, Date dataNasc, String sexoCliente, String estadoCivil) {
         this.CPF = CPF;
         this.nomeCliente = nomeCliente;
         this.emailCliente = emailCliente;
@@ -35,6 +37,15 @@ public class Cliente {
         this.enderecoCliente = enderecoCliente;
         this.dataNasc = dataNasc;
         this.sexoCliente = sexoCliente;
+        this.estadoCivil = estadoCivil;
+    }
+
+    public String getEstadoCivil() {
+        return estadoCivil;
+    }
+
+    public void setEstadoCivil(String estadoCivil) {
+        this.estadoCivil = estadoCivil;
     }
     
     

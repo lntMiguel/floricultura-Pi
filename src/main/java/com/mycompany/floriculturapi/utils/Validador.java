@@ -62,8 +62,9 @@ public class Validador {
         else{
             String cpfConsulta = cpf.getText();
             ArrayList<Cliente> lista = ClienteDAO.pesquisa(cpfConsulta);
-        
-            if(lista != null){
+            lista.size();
+            
+            if(!lista.isEmpty()){
                 this.mensagensErro.add("Erro: CPF já cadastrado");
                 cpf.setBackground(Color.red);
             }
@@ -101,7 +102,7 @@ public class Validador {
      }
      
      public void validarBotao(ButtonGroup bg){
-         
+         int grupoDeBotoes = bg.getButtonCount();
          try{
              
              if(bg.getSelection() == null){
@@ -109,7 +110,14 @@ public class Validador {
              }
          }
          catch(IllegalArgumentException e){
-             this.mensagensErro.add("Não são permitidos valores nulos");
+             if(grupoDeBotoes == 3){
+                 this.mensagensErro.add("Selecione o sexo");
+             }
+        
+             else{
+                 this.mensagensErro.add("Selecione o estado Civil");
+        
+             }
          }
      }
      

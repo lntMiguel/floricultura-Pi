@@ -33,7 +33,7 @@ public class ClienteDAO {
             
             //preparar comando sql
             PreparedStatement instrucaoSQL = conexao.prepareStatement(
-            "INSERT INTO cliente(nomeCliente, CPF, emailCliente, enderecoCliente, telefoneCliente, dataNasc, sexoCliente) VALUES(?,?,?,?,?,?,?);");
+            "INSERT INTO cliente(nomeCliente, CPF, emailCliente, enderecoCliente, telefoneCliente, dataNasc, sexoCliente, estadoCivil) VALUES(?,?,?,?,?,?,?,?);");
             
             instrucaoSQL.setString(1, obj.getNomeCliente());
             instrucaoSQL.setString(2,obj.getCPF());
@@ -42,6 +42,7 @@ public class ClienteDAO {
             instrucaoSQL.setString(5, obj.getTelefoneCliente());
             instrucaoSQL.setDate(6, (Date) obj.getDataNasc());
             instrucaoSQL.setString(7, obj.getSexoCliente());
+            instrucaoSQL.setString(8, obj.getEstadoCivil());
             
             //executar o comando
             int linhasAfetadas = instrucaoSQL.executeUpdate();
@@ -100,8 +101,9 @@ public class ClienteDAO {
                     String email = rs.getString("emailCliente");
                     String sexo = rs.getString("sexoCliente");
                     Date dataNasc = rs.getDate("dataNasc");
+                    String estadoCivil = rs.getString("estadoCivil");
                     
-                    Cliente item = new Cliente(id, cpf, nome, email, telefone, endereco,dataNasc,  sexo);
+                    Cliente item = new Cliente(id, cpf, nome, email, telefone, endereco,dataNasc,  sexo, estadoCivil);
                     listaRetorno.add(item);
                     
                     
@@ -165,8 +167,9 @@ public class ClienteDAO {
                     String email = rs.getString("emailCliente");
                     String sexo = rs.getString("sexoCliente");
                     Date dataNasc = rs.getDate("dataNasc");
+                    String estadoCivil = rs.getString("estadoCivil");
                     
-                    Cliente item = new Cliente(id, cpf, nome, email, telefone, endereco,dataNasc,  sexo);
+                    Cliente item = new Cliente(id, cpf, nome, email, telefone, endereco,dataNasc,  sexo, estadoCivil);
                     listaRetorno.add(item);
                     
                     
@@ -211,7 +214,7 @@ public class ClienteDAO {
             
             //preparar comando sql
             PreparedStatement instrucaoSQL = conexao.prepareStatement(
-            "UPDATE cliente SET nomeCliente=?, emailCliente=?, enderecoCliente=?, telefoneCliente=?, dataNasc=?, sexoCliente=? WHERE idCliente = ?;");
+            "UPDATE cliente SET nomeCliente=?, emailCliente=?, enderecoCliente=?, telefoneCliente=?, dataNasc=?, sexoCliente=?, estadoCivil=? WHERE idCliente = ?;");
             
             instrucaoSQL.setString(1, obj.getNomeCliente());
             instrucaoSQL.setString(2, obj.getEmailCliente());
@@ -219,7 +222,8 @@ public class ClienteDAO {
             instrucaoSQL.setString(4, obj.getTelefoneCliente());
             instrucaoSQL.setDate(5, (Date) obj.getDataNasc());
             instrucaoSQL.setString(6, obj.getSexoCliente());
-            instrucaoSQL.setInt(7, obj.getIdCliente());
+            instrucaoSQL.setString(7, obj.getEstadoCivil());
+            instrucaoSQL.setInt(8, obj.getIdCliente());
             
             //executar o comando
             int linhasAfetadas = instrucaoSQL.executeUpdate();

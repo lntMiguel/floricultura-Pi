@@ -42,6 +42,7 @@ public class ManutencaoCliente extends javax.swing.JFrame {
     private void initComponents() {
 
         bgSexo = new javax.swing.ButtonGroup();
+        bgEstadoCivil = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         lbDataNasc = new javax.swing.JLabel();
@@ -60,6 +61,9 @@ public class ManutencaoCliente extends javax.swing.JFrame {
         txtTelefone = new javax.swing.JFormattedTextField();
         lbEnd = new javax.swing.JLabel();
         dcDataNasc = new com.toedter.calendar.JDateChooser();
+        jLabel3 = new javax.swing.JLabel();
+        rbCasado = new javax.swing.JRadioButton();
+        rbSolteiro = new javax.swing.JRadioButton();
         btnCadastrar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
@@ -155,7 +159,18 @@ public class ManutencaoCliente extends javax.swing.JFrame {
         dcDataNasc.setDateFormatString("d '/' M '/' y");
         jPanel2.add(dcDataNasc, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 140, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 320, 380));
+        jLabel3.setText("Estado Civil");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 370, -1, -1));
+
+        bgEstadoCivil.add(rbCasado);
+        rbCasado.setText("Casado");
+        jPanel2.add(rbCasado, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 390, -1, -1));
+
+        bgEstadoCivil.add(rbSolteiro);
+        rbSolteiro.setText("Solteiro");
+        jPanel2.add(rbSolteiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 390, -1, -1));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 320, 420));
 
         btnCadastrar.setText("CADASTRAR");
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -163,7 +178,7 @@ public class ManutencaoCliente extends javax.swing.JFrame {
                 btnCadastrarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 440, 130, 60));
+        jPanel1.add(btnCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 480, 130, 60));
 
         btnEditar.setText("EDITAR");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -186,11 +201,11 @@ public class ManutencaoCliente extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id", "Nome", "Email", "Telefone", "CPF", "Endereço", "Sexo", "Data de Nasc"
+                "Id", "Nome", "Email", "Telefone", "CPF", "Endereço", "Sexo", "Data de Nasc", "Estado Civil"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -313,7 +328,8 @@ public class ManutencaoCliente extends javax.swing.JFrame {
                 item.getCPF(),
                 item.getEnderecoCliente(),
                 item.getSexoCliente(),
-                String.valueOf(item.getDataNasc())
+                String.valueOf(item.getDataNasc()),
+                item.getEstadoCivil()
                     
             });
         }
@@ -326,6 +342,7 @@ public class ManutencaoCliente extends javax.swing.JFrame {
             objValidador.validarTexto(txtEmail);
             objValidador.validarTexto(txtEndereco);
             objValidador.validarBotao(bgSexo);
+            objValidador.validarBotao(bgEstadoCivil);
             objValidador.validarTexto(txtConsulta);
             objValidador.validarTexto(txtTelefone);
             objValidador.validarData(dcDataNasc);
@@ -342,7 +359,8 @@ public class ManutencaoCliente extends javax.swing.JFrame {
             String sexo;
             String endereco = txtEndereco.getText();
             Date dataNasc = new java.sql.Date (dcDataNasc.getDate().getTime());
-        
+            String estadoCivil;
+            
             if(rbMasc.isSelected())
                 sexo = "Masculino";
             
@@ -352,6 +370,11 @@ public class ManutencaoCliente extends javax.swing.JFrame {
             else
                 sexo = "Outro";
             
+            if(rbCasado.isSelected())
+                estadoCivil = "Casado";
+            
+            else 
+                estadoCivil = "Solteiro";
             
             objAlterar.setDataNasc(dataNasc);
             objAlterar.setEmailCliente(email);
@@ -359,7 +382,7 @@ public class ManutencaoCliente extends javax.swing.JFrame {
             objAlterar.setSexoCliente(sexo);
             objAlterar.setNomeCliente(nome);
             objAlterar.setTelefoneCliente(telefone);
-            
+            objAlterar.setEstadoCivil(estadoCivil);
             //incluir dao
             boolean retornoAlteracao = ClienteDAO.alterar(objAlterar);
             
@@ -375,6 +398,8 @@ public class ManutencaoCliente extends javax.swing.JFrame {
                 rbMasc.setSelected(false);
                 rbFem.setSelected(false);
                 rbOutro.setSelected(false);
+                rbCasado.setSelected(false);
+                rbSolteiro.setSelected(false);
                 atualizarTabela();
             }
             else
@@ -390,10 +415,12 @@ public class ManutencaoCliente extends javax.swing.JFrame {
             objValidador.validarTexto(txtEmail);
             objValidador.validarTexto(txtEndereco);
             objValidador.validarBotao(bgSexo);
+            objValidador.validarBotao(bgEstadoCivil);
             objValidador.validarTexto(txtConsulta);
             objValidador.validarTelefone(txtTelefone);
             objValidador.validarData(dcDataNasc);
             objValidador.validarCPF(txtCPF);
+            
             if(objValidador.hasErro()){
                 JOptionPane.showMessageDialog(rootPane, objValidador.getMensagensErro());    
             }
@@ -409,6 +436,7 @@ public class ManutencaoCliente extends javax.swing.JFrame {
                 String endereco = txtEndereco.getText();
                 //Date dataNasc = dcDataNasc.getDate();
                 Date dataNasc = new java.sql.Date (dcDataNasc.getDate().getTime());
+                String estadoCivil;
 
                 if(rbMasc.isSelected())
                     sexo = "Masculino";
@@ -418,12 +446,18 @@ public class ManutencaoCliente extends javax.swing.JFrame {
 
                 else
                     sexo = "Outro";
-
+                
+                if(rbCasado.isSelected())
+                estadoCivil = "Casado";
+            
+                else 
+                    estadoCivil = "Solteiro";
+                
                 //Object[] dados = {nome, email, cpf, telefone, endereco, sexo, dataNasc};
-
+                
                 //tabelaCliente.addRow(dados);
-
-                Cliente objCadastrar = new Cliente(cpf, nome, email, telefone,endereco, dataNasc, sexo);
+                
+                Cliente objCadastrar = new Cliente(cpf, nome, email, telefone,endereco, dataNasc, sexo, estadoCivil);
 
                 boolean retornoBanco = ClienteDAO.salvar(objCadastrar);
 
@@ -437,6 +471,8 @@ public class ManutencaoCliente extends javax.swing.JFrame {
                     rbMasc.setSelected(false);
                     rbFem.setSelected(false);
                     rbOutro.setSelected(false);
+                    rbCasado.setSelected(false);
+                    rbSolteiro.setSelected(false);
                     atualizarTabela();
                 }
 
@@ -456,26 +492,6 @@ public class ManutencaoCliente extends javax.swing.JFrame {
         
         if(linhaSelecionada >= 0){
            
-            //int resposta = JOptionPane.showConfirmDialog(rootPane, "Você realmente deseja editar os dados deste cliente?", "Editar cliente", 2);
-           
-            //if(resposta == 0){
-               
-               
-               
-               
-               
-               //else{
-                   //objValidador.limparMensagens();
-                   String sexo;
-                   if(rbMasc.isSelected())
-                        sexo = "Masculino";
-            
-                    else if(rbFem.isSelected())
-                        sexo = "Feminino";
-            
-                    else
-                        sexo = "Outro";
-                   
                    int id = Integer.parseInt(modeloClientes.getValueAt(linhaSelecionada, 0).toString());
                    String nome = modeloClientes.getValueAt(linhaSelecionada, 1).toString();
                    String email = modeloClientes.getValueAt(linhaSelecionada, 2).toString();
@@ -484,13 +500,13 @@ public class ManutencaoCliente extends javax.swing.JFrame {
                    String endereco = modeloClientes.getValueAt(linhaSelecionada, 5).toString();
                    String sexoEditar = modeloClientes.getValueAt(linhaSelecionada, 6).toString();
                    String dataNasc = modeloClientes.getValueAt(linhaSelecionada, 7).toString();
-                   
+                   String estadoCivil = modeloClientes.getValueAt(linhaSelecionada, 8).toString();
+
                    dataNasc = dataNasc.replace("-", "");
                    Long dataTeste = Long.parseLong(dataNasc);
                    Date dataFinal = new java.sql.Date(dataTeste);
                    
-                 
-                   objAlterar = new Cliente(id, cpf, nome, email,telefone, endereco, dataFinal, sexoEditar);
+                   objAlterar = new Cliente(id, cpf, nome, email,telefone, endereco, dataFinal, sexoEditar, estadoCivil);
                    
                    txtNome.setText(objAlterar.getNomeCliente());
                    txtCPF.setText(objAlterar.getCPF());
@@ -509,22 +525,14 @@ public class ManutencaoCliente extends javax.swing.JFrame {
                        rbOutro.setSelected(true);
                    }
                    
+                   if("Casado".equals(estadoCivil)){
+                       rbCasado.setSelected(true);
+                   }
+                   else{
+                       rbSolteiro.setSelected(true);
+                   }
                    
-                   
-                   
-                   /*tbCliente.setValueAt(txtNome.getText(), tbCliente.getSelectedRow(), 0);
-                   tbCliente.setValueAt(txtEmail.getText(), tbCliente.getSelectedRow(), 1);
-                   tbCliente.setValueAt(txtTelefone.getText(), tbCliente.getSelectedRow(), 2);
-                   tbCliente.setValueAt(txtConsulta.getText(), tbCliente.getSelectedRow(), 3);
-                   tbCliente.setValueAt(txtEndereco.getText(), tbCliente.getSelectedRow(), 4);
-                   tbCliente.setValueAt(sexo, tbCliente.getSelectedRow(), 5);*/
-               //}
-            //}
-            
-            //else{
-              //  JOptionPane.showMessageDialog(null,"Operação Cancelada");
-           //}
-          
+                  
        }
        
        else{
@@ -567,8 +575,8 @@ public class ManutencaoCliente extends javax.swing.JFrame {
                     item.getCPF(),
                     item.getEnderecoCliente(),
                     item.getSexoCliente(),
-                    String.valueOf(item.getDataNasc())
-
+                    String.valueOf(item.getDataNasc()),
+                    item.getEstadoCivil()
                 });
             }
         }
@@ -589,8 +597,8 @@ public class ManutencaoCliente extends javax.swing.JFrame {
                     item.getCPF(),
                     item.getEnderecoCliente(),
                     item.getSexoCliente(),
-                    String.valueOf(item.getDataNasc())
-
+                    String.valueOf(item.getDataNasc()),
+                    item.getEstadoCivil()
                 });
             }
             txtConsulta.setText("");
@@ -665,6 +673,7 @@ public class ManutencaoCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup bgEstadoCivil;
     private javax.swing.ButtonGroup bgSexo;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnEditar;
@@ -673,6 +682,7 @@ public class ManutencaoCliente extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dcDataNasc;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
@@ -689,9 +699,11 @@ public class ManutencaoCliente extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuProdutos;
     private javax.swing.JMenuItem mnuRelatorios;
     private javax.swing.JMenuItem mnuVender;
+    private javax.swing.JRadioButton rbCasado;
     private javax.swing.JRadioButton rbFem;
     private javax.swing.JRadioButton rbMasc;
     private javax.swing.JRadioButton rbOutro;
+    private javax.swing.JRadioButton rbSolteiro;
     private javax.swing.JTable tblClientes;
     private javax.swing.JFormattedTextField txtCPF;
     private javax.swing.JFormattedTextField txtConsulta;
