@@ -12,6 +12,7 @@ com\mycompany\floriculturapi\views\ProdutoManutencao$11.class
 com\mycompany\floriculturapi\views\ProdutoManutencao$6.class
 com\mycompany\floriculturapi\views\ProdutoManutencao.class
 com\mycompany\floriculturapi\views\ProdutoManutencao$8.class
+com\mycompany\floriculturapi\views\Relatorio$8.class
 com\mycompany\floriculturapi\views\ManutencaoCliente$3.class
 com\mycompany\floriculturapi\views\Vendas.class
 com\mycompany\floriculturapi\views\Relatorio$1.class
@@ -32,11 +33,13 @@ com\mycompany\floriculturapi\views\ManutencaoCliente$9.class
 com\mycompany\floriculturapi\views\Inicio$2.class
 com\mycompany\floriculturapi\views\ProdutoManutencao$12.class
 com\mycompany\floriculturapi\views\ProdutoManutencao$4.class
+com\mycompany\floriculturapi\views\Vendas$8.class
 com\mycompany\floriculturapi\views\ManutencaoCliente.class
 com\mycompany\floriculturapi\views\ManutencaoCliente$10.class
 com\mycompany\floriculturapi\dao\ProdutoDAO.class
 com\mycompany\floriculturapi\models\Cliente.class
 com\mycompany\floriculturapi\models\Produto.class
+com\mycompany\floriculturapi\views\Relatorio$7.class
 com\mycompany\floriculturapi\views\Relatorio$4.class
 com\mycompany\floriculturapi\views\ManutencaoCliente$6.class
 com\mycompany\floriculturapi\views\Inicio$3.class

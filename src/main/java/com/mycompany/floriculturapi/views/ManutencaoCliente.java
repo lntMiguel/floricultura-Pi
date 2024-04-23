@@ -541,11 +541,15 @@ public class ManutencaoCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void mnuVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuVenderActionPerformed
-        // TODO add your handling code here:
+        Vendas venda = new Vendas();
+        this.dispose();
+        venda.setVisible(true);
     }//GEN-LAST:event_mnuVenderActionPerformed
 
     private void mnuProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProdutosActionPerformed
-        // TODO add your handling code here:
+        ProdutoManutencao produto = new ProdutoManutencao();
+        this.dispose();
+        produto.setVisible(true);
     }//GEN-LAST:event_mnuProdutosActionPerformed
 
     private void mnuMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMenuActionPerformed
@@ -555,7 +559,9 @@ public class ManutencaoCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuMenuActionPerformed
 
     private void mnuRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuRelatoriosActionPerformed
-        // TODO add your handling code here:
+        Relatorio relatorio = new Relatorio();
+        this.dispose();
+        relatorio.setVisible(true);
     }//GEN-LAST:event_mnuRelatoriosActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed

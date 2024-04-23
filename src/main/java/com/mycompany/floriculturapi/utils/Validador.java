@@ -39,7 +39,6 @@ public class Validador {
             if(txt.getText().trim().equals("")){
                 throw new IllegalArgumentException();
             }
-            
             float valorConvertido = Float.parseFloat(txt.getText());
             txt.setBackground(Color.WHITE);
             
@@ -78,7 +77,7 @@ public class Validador {
      */
     
     public void validarTelefone(JFormattedTextField tel){
-         if("   .   .   -  ".equals(tel.getText())){
+         if("(  )     -    ".equals(tel.getText())){
              this.mensagensErro.add("Digite um telefone");
              tel.setBackground(Color.red);
         }
@@ -102,14 +101,21 @@ public class Validador {
      }
      
      public void validarBotao(ButtonGroup bg){
+         //resgato o numero de botões
          int grupoDeBotoes = bg.getButtonCount();
+         
          try{
-             
+             //verifico se algum foi selecionado
              if(bg.getSelection() == null){
                  throw new IllegalArgumentException();
              }
          }
          catch(IllegalArgumentException e){
+             /*verifico qual informação não foi dada pela quantidade de botões
+               presentes no buttonGroup, caso for 3 faltou o sexo(masculino, 
+               feminino, outro), senão
+               faltou o estado civil (solteiro, casado)
+             */ 
              if(grupoDeBotoes == 3){
                  this.mensagensErro.add("Selecione o sexo");
              }
@@ -183,7 +189,7 @@ public class Validador {
          }
          catch(IllegalArgumentException e){
              this.mensagensErro.add("Insira uma data");
-         } // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+         } 
     }
     
 }

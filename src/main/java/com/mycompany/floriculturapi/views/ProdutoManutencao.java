@@ -349,39 +349,7 @@ public class ProdutoManutencao extends javax.swing.JFrame {
        else{
             JOptionPane.showMessageDialog(null,"Selecione um produto para editar");
         }
-        /*if(tblProdutos.getSelectedRow() !=  -1){
-           
-            int resposta = JOptionPane.showConfirmDialog(rootPane, "Você realmente deseja editar este produto?", "Editar Produto", 2);
-           
-            if(resposta == 0){
-               
-               Validador objValidador = new Validador();
-               objValidador.validarNumero(txtPreco);
-               objValidador.validarTexto(txtNome);
-               
-               if(objValidador.hasErro()){
-                   JOptionPane.showMessageDialog(rootPane, objValidador.getMensagensErro());
-               }
-               
-               else{
-                   objValidador.limparMensagens();
-                   float preco = Float.parseFloat(txtPreco.getText());
-                   tblProdutos.setValueAt(txtNome.getText(), tblProdutos.getSelectedRow(), 0);
-                   tblProdutos.setValueAt(cbTipo.getSelectedItem(), tblProdutos.getSelectedRow(), 1);
-                   tblProdutos.setValueAt(spnQtd.getValue(), tblProdutos.getSelectedRow(), 2);
-                   tblProdutos.setValueAt(preco, tblProdutos.getSelectedRow(), 3);
-               }
-            }
-            
-            else{
-                JOptionPane.showMessageDialog(null,"Operação Cancelada");
-           }
-          
-       }
-       
-       else{
-            JOptionPane.showMessageDialog(null,"Selecione um produto para editar");
-        }*/
+        
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
