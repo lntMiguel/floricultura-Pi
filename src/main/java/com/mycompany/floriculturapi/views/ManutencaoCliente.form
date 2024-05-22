@@ -267,7 +267,7 @@
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="dcDataNasc">
               <Properties>
-                <Property name="dateFormatString" type="java.lang.String" value="d &apos;/&apos; M &apos;/&apos; y"/>
+                <Property name="dateFormatString" type="java.lang.String" value=" dd/MM/yyyy"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

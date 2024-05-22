@@ -140,7 +140,7 @@ public class ProdutoDAO {
             //preparar comando sql
             PreparedStatement instrucaoSQL = conexao.prepareStatement(
             "SELECT * FROM Produto WHERE nomeProduto LIKE ? ");
-            instrucaoSQL.setString(1,nomePesquisa);
+            instrucaoSQL.setString(1,nomePesquisa + "%");
             
             //executar comando
             rs = instrucaoSQL.executeQuery();
@@ -227,7 +227,7 @@ public class ProdutoDAO {
                 try {
                     conexao.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
     

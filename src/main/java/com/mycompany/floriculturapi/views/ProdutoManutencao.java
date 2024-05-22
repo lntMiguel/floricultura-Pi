@@ -354,20 +354,21 @@ public class ProdutoManutencao extends javax.swing.JFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
            int linhaSelecionada = tblProdutos.getSelectedRow();
-        if(linhaSelecionada >= 0){
+        
+           if(linhaSelecionada >= 0){
             
-            DefaultTableModel modeloTabela = (DefaultTableModel) tblProdutos.getModel();          
-            int idExcluir = Integer.parseInt(modeloTabela.getValueAt(linhaSelecionada,0).toString());
-            //chamar dao para excluir;
-            boolean retorno = ProdutoDAO.excluir(idExcluir);
-            
-            if(retorno){
-                JOptionPane.showMessageDialog(rootPane, "Produto deletado com sucesso!");
-                atualizarTabela();
+                DefaultTableModel modeloTabela = (DefaultTableModel) tblProdutos.getModel();          
+                int idExcluir = Integer.parseInt(modeloTabela.getValueAt(linhaSelecionada,0).toString());
+                //chamar dao para excluir;
+                boolean retorno = ProdutoDAO.excluir(idExcluir);
+
+                if(retorno){
+                    JOptionPane.showMessageDialog(rootPane, "Produto deletado com sucesso!");
+                    atualizarTabela();
+                }
+                else
+                    JOptionPane.showMessageDialog(rootPane, "Erro ao deletar Produto!");
             }
-            else
-                JOptionPane.showMessageDialog(rootPane, "Erro ao deletar Produto!");
-        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void mnuInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuInicioActionPerformed

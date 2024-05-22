@@ -64,5 +64,12 @@ public class Produto {
     public void setPrecoProduto(float precoProduto) {
         this.precoProduto = precoProduto;
     }
+
+    @Override
+    public String toString() {
+        return this.nomeProduto;
+    }
+    
+    
     
 }

@@ -4,12 +4,13 @@ import com.mycompany.floriculturapi.dao.ClienteDAO;
 import com.mycompany.floriculturapi.models.Cliente;
 import com.mycompany.floriculturapi.utils.Validador;
 import java.awt.event.KeyEvent;
-import static java.lang.Long.parseLong;
-import java.sql.Date;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -156,7 +157,7 @@ public class ManutencaoCliente extends javax.swing.JFrame {
         lbEnd.setText("Endereço:");
         jPanel2.add(lbEnd, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
 
-        dcDataNasc.setDateFormatString("d '/' M '/' y");
+        dcDataNasc.setDateFormatString(" dd/MM/yyyy");
         jPanel2.add(dcDataNasc, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 140, -1));
 
         jLabel3.setText("Estado Civil");
@@ -358,7 +359,7 @@ public class ManutencaoCliente extends javax.swing.JFrame {
             String telefone = txtTelefone.getText();
             String sexo;
             String endereco = txtEndereco.getText();
-            Date dataNasc = new java.sql.Date (dcDataNasc.getDate().getTime());
+            Date dataNasc = dcDataNasc.getDate();
             String estadoCivil;
             
             if(rbMasc.isSelected())
@@ -434,8 +435,7 @@ public class ManutencaoCliente extends javax.swing.JFrame {
                 String telefone = txtTelefone.getText();
                 String sexo;
                 String endereco = txtEndereco.getText();
-                //Date dataNasc = dcDataNasc.getDate();
-                Date dataNasc = new java.sql.Date (dcDataNasc.getDate().getTime());
+                Date dataNasc = dcDataNasc.getDate();
                 String estadoCivil;
 
                 if(rbMasc.isSelected())
@@ -453,10 +453,7 @@ public class ManutencaoCliente extends javax.swing.JFrame {
                 else 
                     estadoCivil = "Solteiro";
                 
-                //Object[] dados = {nome, email, cpf, telefone, endereco, sexo, dataNasc};
-                
-                //tabelaCliente.addRow(dados);
-                
+               
                 Cliente objCadastrar = new Cliente(cpf, nome, email, telefone,endereco, dataNasc, sexo, estadoCivil);
 
                 boolean retornoBanco = ClienteDAO.salvar(objCadastrar);
@@ -473,6 +470,7 @@ public class ManutencaoCliente extends javax.swing.JFrame {
                     rbOutro.setSelected(false);
                     rbCasado.setSelected(false);
                     rbSolteiro.setSelected(false);
+                    dcDataNasc.setDate(null);
                     atualizarTabela();
                 }
 
@@ -490,6 +488,7 @@ public class ManutencaoCliente extends javax.swing.JFrame {
         DefaultTableModel modeloClientes = (DefaultTableModel) tblClientes.getModel();
         int linhaSelecionada = tblClientes.getSelectedRow();
         
+        
         if(linhaSelecionada >= 0){
            
                    int id = Integer.parseInt(modeloClientes.getValueAt(linhaSelecionada, 0).toString());
@@ -501,10 +500,19 @@ public class ManutencaoCliente extends javax.swing.JFrame {
                    String sexoEditar = modeloClientes.getValueAt(linhaSelecionada, 6).toString();
                    String dataNasc = modeloClientes.getValueAt(linhaSelecionada, 7).toString();
                    String estadoCivil = modeloClientes.getValueAt(linhaSelecionada, 8).toString();
-
-                   dataNasc = dataNasc.replace("-", "");
-                   Long dataTeste = Long.parseLong(dataNasc);
-                   Date dataFinal = new java.sql.Date(dataTeste);
+                   
+                   String[] dt = dataNasc.split("-");
+                   
+                   int conversao = Integer.parseInt(dt[0]) - 1970;
+                   
+                   long anoMs = Long.parseLong( String.valueOf(conversao)) * 31536000000L;
+                   long mesMs = Long.parseLong(dt[1]) * 2629800000L;
+                   long diaMs = Long.parseLong(dt[2]) * 86400000L;
+                   
+                   long data = anoMs + mesMs + diaMs;
+                   
+                 
+                   Date dataFinal = new java.util.Date(data);
                    
                    objAlterar = new Cliente(id, cpf, nome, email,telefone, endereco, dataFinal, sexoEditar, estadoCivil);
                    
@@ -589,24 +597,22 @@ public class ManutencaoCliente extends javax.swing.JFrame {
         
         else{
             String cpfConsulta = txtConsulta.getText();
-            ArrayList<Cliente> lista = ClienteDAO.pesquisa(cpfConsulta);
+            Cliente clientePesquisa = ClienteDAO.pesquisa(cpfConsulta);
             DefaultTableModel modeloTabela = (DefaultTableModel) tblClientes.getModel();
             modeloTabela.setRowCount(0);
 
-            for(Cliente item : lista){
-
                 modeloTabela.addRow(new String[]{
-                    String.valueOf(item.getIdCliente()),
-                    item.getNomeCliente(),
-                    item.getEmailCliente(),
-                    item.getTelefoneCliente(),
-                    item.getCPF(),
-                    item.getEnderecoCliente(),
-                    item.getSexoCliente(),
-                    String.valueOf(item.getDataNasc()),
-                    item.getEstadoCivil()
+                    String.valueOf(clientePesquisa.getIdCliente()),
+                    clientePesquisa.getNomeCliente(),
+                    clientePesquisa.getEmailCliente(),
+                    clientePesquisa.getTelefoneCliente(),
+                    clientePesquisa.getCPF(),
+                    clientePesquisa.getEnderecoCliente(),
+                    clientePesquisa.getSexoCliente(),
+                    String.valueOf(clientePesquisa.getDataNasc()),
+                    clientePesquisa.getEstadoCivil()
                 });
-            }
+            
             txtConsulta.setText("");
         }
     }//GEN-LAST:event_btnPesquisarActionPerformed

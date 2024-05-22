@@ -54,16 +54,16 @@ public class Validador {
     }
     
     public void validarCPF(JFormattedTextField cpf){
+        cpf.setBackground(Color.WHITE);
         if("   .   .   -  ".equals(cpf.getText())){
              this.mensagensErro.add("Digite um CPF");
              cpf.setBackground(Color.red);
         }
         else{
             String cpfConsulta = cpf.getText();
-            ArrayList<Cliente> lista = ClienteDAO.pesquisa(cpfConsulta);
-            lista.size();
+            Cliente clientePesquisa = ClienteDAO.pesquisa(cpfConsulta);
             
-            if(!lista.isEmpty()){
+            if(clientePesquisa != null){
                 this.mensagensErro.add("Erro: CPF já cadastrado");
                 cpf.setBackground(Color.red);
             }
@@ -77,11 +77,13 @@ public class Validador {
      */
     
     public void validarTelefone(JFormattedTextField tel){
-         if("(  )     -    ".equals(tel.getText())){
+        tel.setBackground(Color.WHITE); 
+        if("(  )     -    ".equals(tel.getText())){
              this.mensagensErro.add("Digite um telefone");
              tel.setBackground(Color.red);
         }
     }
+    
      public void validarTexto(JTextField txt){
      
          try{

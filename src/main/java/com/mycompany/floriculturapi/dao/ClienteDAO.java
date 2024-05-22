@@ -3,11 +3,12 @@ package com.mycompany.floriculturapi.dao;
 
 import com.mycompany.floriculturapi.models.Cliente;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,7 +41,7 @@ public class ClienteDAO {
             instrucaoSQL.setString(3, obj.getEmailCliente());
             instrucaoSQL.setString(4, obj.getEnderecoCliente());
             instrucaoSQL.setString(5, obj.getTelefoneCliente());
-            instrucaoSQL.setDate(6, (Date) obj.getDataNasc());
+            instrucaoSQL.setDate(6, new java.sql.Date( obj.getDataNasc().getTime())); 
             instrucaoSQL.setString(7, obj.getSexoCliente());
             instrucaoSQL.setString(8, obj.getEstadoCivil());
             
@@ -76,6 +77,7 @@ public class ClienteDAO {
         ArrayList<Cliente> listaRetorno = new ArrayList<>();
         Connection conexao = null;
         ResultSet rs = null;
+        
         try{
             //carregar driver
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -134,9 +136,9 @@ public class ClienteDAO {
     
     }
     
-    public static ArrayList<Cliente> pesquisa(String cpfPesquisa){
+    public static Cliente pesquisa(String cpfPesquisa){
         
-        ArrayList<Cliente> listaRetorno = new ArrayList<>();
+        Cliente clienteRetorno = null;
         Connection conexao = null;
         ResultSet rs = null;
         
@@ -168,16 +170,14 @@ public class ClienteDAO {
                     String sexo = rs.getString("sexoCliente");
                     Date dataNasc = rs.getDate("dataNasc");
                     String estadoCivil = rs.getString("estadoCivil");
-                    
-                    Cliente item = new Cliente(id, cpf, nome, email, telefone, endereco,dataNasc,  sexo, estadoCivil);
-                    listaRetorno.add(item);
+                    clienteRetorno = new Cliente(id, cpf, nome, email, telefone, endereco,dataNasc,  sexo, estadoCivil);
                     
                     
                 }
             }
         } 
         catch(Exception e){
-            listaRetorno = null;
+            clienteRetorno = null;
         } finally{
             if(conexao != null){
                 try {
@@ -196,7 +196,7 @@ public class ClienteDAO {
             }
         }
      
-        return listaRetorno;  
+        return clienteRetorno;  
     
     }
 
@@ -220,7 +220,7 @@ public class ClienteDAO {
             instrucaoSQL.setString(2, obj.getEmailCliente());
             instrucaoSQL.setString(3, obj.getEnderecoCliente());
             instrucaoSQL.setString(4, obj.getTelefoneCliente());
-            instrucaoSQL.setDate(5, (Date) obj.getDataNasc());
+            instrucaoSQL.setDate(5,  new java.sql.Date(obj.getDataNasc().getTime()));
             instrucaoSQL.setString(6, obj.getSexoCliente());
             instrucaoSQL.setString(7, obj.getEstadoCivil());
             instrucaoSQL.setInt(8, obj.getIdCliente());

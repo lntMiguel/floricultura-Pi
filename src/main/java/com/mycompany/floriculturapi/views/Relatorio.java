@@ -1,7 +1,14 @@
 package com.mycompany.floriculturapi.views;
 
+import com.mycompany.floriculturapi.dao.RelatorioAnaliticoDAO;
+import com.mycompany.floriculturapi.dao.RelatorioSinteticoDAO;
+import com.mycompany.floriculturapi.models.RelatorioAnalitico;
+import com.mycompany.floriculturapi.models.RelatorioSintetico;
 import com.mycompany.floriculturapi.utils.Validador;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -42,8 +49,9 @@ public class Relatorio extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btnPesquisar = new javax.swing.JButton();
         btnDetalhes = new javax.swing.JButton();
-        dcDataInicio = new com.toedter.calendar.JDateChooser();
-        dcDataTermino = new com.toedter.calendar.JDateChooser();
+        jdcDataInicio = new com.toedter.calendar.JDateChooser();
+        jdcDataTermino = new com.toedter.calendar.JDateChooser();
+        lblValorTotal = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -65,10 +73,7 @@ public class Relatorio extends javax.swing.JFrame {
 
         tblRelatoriosAnaliticos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Produto", "Tipo", "Quantidade", "Valor"
@@ -88,17 +93,14 @@ public class Relatorio extends javax.swing.JFrame {
 
         tblRelatoriosSinteticos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Cliente", "Data", "Valor"
+                "ID", "Data", "Cliente", "Valor Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -126,9 +128,21 @@ public class Relatorio extends javax.swing.JFrame {
         jPanel2.add(btnPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 10, -1, 30));
 
         btnDetalhes.setText("Detalhes");
+        btnDetalhes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDetalhesActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnDetalhes, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 50, 180, 40));
-        jPanel2.add(dcDataInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, -1, -1));
-        jPanel2.add(dcDataTermino, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, -1, -1));
+
+        jdcDataInicio.setDateFormatString("dd/MM/yyyy");
+        jPanel2.add(jdcDataInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, -1, -1));
+
+        jdcDataTermino.setDateFormatString("dd/MM/yyyy");
+        jPanel2.add(jdcDataTermino, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, -1, -1));
+
+        lblValorTotal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jPanel2.add(lblValorTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, 190, 30));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 710, 480));
 
@@ -204,16 +218,60 @@ public class Relatorio extends javax.swing.JFrame {
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         Validador objValidador = new Validador();
-        objValidador.validarData(dcDataInicio);
-        objValidador.validarData(dcDataTermino);
+        objValidador.validarData(jdcDataInicio);
+        objValidador.validarData(jdcDataTermino);
         
         if(objValidador.hasErro()){
             JOptionPane.showMessageDialog(rootPane, objValidador.getMensagensErro());    
         }
-            /*############
-            Colocar else
-            ############*/
+        else{
+            Date dataInicio = jdcDataInicio.getDate();
+            Date dataTermino = jdcDataTermino.getDate();
+            
+            ArrayList<RelatorioSintetico> lista = RelatorioSinteticoDAO.listarPorPeriodo(dataInicio, dataTermino);
+            
+            DefaultTableModel modelo = (DefaultTableModel) tblRelatoriosSinteticos.getModel();
+            modelo.setRowCount(0);
+            for(RelatorioSintetico item : lista){
+                modelo.addRow(new String[]{
+                    String.valueOf(item.getIdVenda()),
+                    String.valueOf(item.getDataVenda()),
+                    item.getNomeCliente(),
+                    String.valueOf(item.getValorVenda())
+                });
+            }
+            
+        }
     }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnDetalhesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalhesActionPerformed
+        
+        int linhaSelecionada = tblRelatoriosSinteticos.getSelectedRow();
+        
+        if(linhaSelecionada >= 0){
+            DefaultTableModel modelo = (DefaultTableModel) tblRelatoriosSinteticos.getModel();
+            lblValorTotal.setText(modelo.getValueAt(linhaSelecionada, 3).toString());
+            int idVenda = Integer.parseInt(modelo.getValueAt(linhaSelecionada, 0).toString());
+            
+            ArrayList<RelatorioAnalitico> lista = RelatorioAnaliticoDAO.listarPorVenda(idVenda);
+            DefaultTableModel modeloAnalitico = (DefaultTableModel) tblRelatoriosAnaliticos.getModel();
+            modeloAnalitico.setRowCount(0);
+            
+            for(RelatorioAnalitico item : lista){
+                
+                modeloAnalitico.addRow(new String[]{
+                    item.getNomeProduto(),
+                    item.getTipoProduto(),
+                    String.valueOf(item.getQtdProduto()),
+                    String.valueOf(item.getValorUnitario())
+                });
+                
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(rootPane, "Selecione uma linha para exibir os detalhes");
+        }
+    }//GEN-LAST:event_btnDetalhesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -253,8 +311,6 @@ public class Relatorio extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDetalhes;
     private javax.swing.JButton btnPesquisar;
-    private com.toedter.calendar.JDateChooser dcDataInicio;
-    private com.toedter.calendar.JDateChooser dcDataTermino;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -265,6 +321,9 @@ public class Relatorio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private com.toedter.calendar.JDateChooser jdcDataInicio;
+    private com.toedter.calendar.JDateChooser jdcDataTermino;
+    private javax.swing.JLabel lblValorTotal;
     private javax.swing.JMenuItem mnuManutencaoCliente;
     private javax.swing.JMenuItem mnuManutencaoProduto;
     private javax.swing.JMenuItem mnuMenu;

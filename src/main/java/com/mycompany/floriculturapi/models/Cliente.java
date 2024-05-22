@@ -1,6 +1,6 @@
 package com.mycompany.floriculturapi.models;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Cliente {
     private int idCliente;
