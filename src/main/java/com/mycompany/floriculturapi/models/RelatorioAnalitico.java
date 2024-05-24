@@ -1,8 +1,12 @@
 package com.mycompany.floriculturapi.models;
 
 /**
- *
- * @author migue
+ *Classe que registra os dados de um relatório analitico, usando a DAO consegue-se registrar em um banco de dados e fazer sua visualização
+ * 
+ * @author miguel
+ * @see com.mycompany.floriculturapi.dao.RelatorioAnaliticoDAO
+ * @see Produto
+ * 
  */
 public class RelatorioAnalitico {
     

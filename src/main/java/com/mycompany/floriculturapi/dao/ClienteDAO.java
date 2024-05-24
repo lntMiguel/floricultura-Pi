@@ -1,4 +1,3 @@
-
 package com.mycompany.floriculturapi.dao;
 
 import com.mycompany.floriculturapi.models.Cliente;
@@ -8,22 +7,38 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Classe que faz a conexão de um objeto do tipo Cliente com o banco de dados
+ * 
+ * @author miguel
+ * @see Cliente
+ * 
+ */
 public class ClienteDAO {
-    
+    //atributos para fazer a conexão com o Bd
     static String url = "jdbc:mysql://localhost:3306/floriculturapi";
     static String login = "root";
     static String senha = "adminadmin";
     
+    /**
+     * Este método registra um cliente no banco de dados
+     * @param obj - objeto do tipo Cliente
+     * @return boolean true: sucesso | false: falha
+     * @see Cliente
+     * @see ClienteDAO#alterar(com.mycompany.floriculturapi.models.Cliente)
+     * @see ClienteDAO#excluir(int)
+     * @see ClienteDAO#pesquisa(java.lang.String)
+     * @see ClienteDAO#listar()
+     * 
+     */
     
     public static boolean salvar(Cliente obj){
         boolean retorno = false;
         Connection conexao = null ;
-        
         
         try{
             //carregar driver
@@ -48,17 +63,22 @@ public class ClienteDAO {
             //executar o comando
             int linhasAfetadas = instrucaoSQL.executeUpdate();
             
+            //se deu certo retorno = true
             if(linhasAfetadas > 0)
                 retorno = true;
             
-        } catch(ClassNotFoundException e){
+        } 
+        //se deu errado exibir menssagem
+        catch(ClassNotFoundException e){
             System.out.println("Driver não encontrado");
         }  
-        
+        //se deu errado exibir menssagem
         catch(Exception e){
             System.out.println(e.getMessage());
         
-        } finally{
+        } 
+        //encerrar conexão
+        finally{
             if(conexao != null){
                 try {
                     conexao.close();
@@ -69,11 +89,22 @@ public class ClienteDAO {
     
         }
         
-        
+        //retornar valor
         return retorno;
     }
     
+    /**
+     * Método que lista todos os clientes registrados no banco de dados
+     * 
+     * @return ArrayList - Retorna um ArrayList de clientes contendo todos os clientes do banco de dados
+     * @see Cliente
+     * @see ClienteDAO#alterar(com.mycompany.floriculturapi.models.Cliente)
+     * @see ClienteDAO#excluir(int)
+     * @see ClienteDAO#pesquisa(java.lang.String)
+     * @see ClienteDAO#salvar(com.mycompany.floriculturapi.models.Cliente)
+     */
     public static ArrayList<Cliente> listar(){
+        
         ArrayList<Cliente> listaRetorno = new ArrayList<>();
         Connection conexao = null;
         ResultSet rs = null;
@@ -136,6 +167,16 @@ public class ClienteDAO {
     
     }
     
+    /**
+     * Método que realiza uma consulta no banco de dados para localizar um cliente
+     * @param cpfPesquisa
+     * @return Cliente - Retorna um objeto do tipo Cliente, <b>Caso não exista nenhum cliente com o cpf digitado, o retorno terá o valor null</b>
+     * @see Cliente
+     * @see ClienteDAO#alterar(com.mycompany.floriculturapi.models.Cliente)
+     * @see ClienteDAO#excluir(int)
+     * @see ClienteDAO#listar() 
+     * @see ClienteDAO#salvar(com.mycompany.floriculturapi.models.Cliente)
+     */
     public static Cliente pesquisa(String cpfPesquisa){
         
         Cliente clienteRetorno = null;
@@ -200,6 +241,17 @@ public class ClienteDAO {
     
     }
 
+    /**
+     * Método que altera os dados de um cliente no banco de dados
+     * @param obj - Objeto do tipo cliente
+     * @return boolean - True: Sucesso | False: Falha
+     * @see Cliente
+     * @see ClienteDAO#pesquisa(java.lang.String) 
+     * @see ClienteDAO#excluir(int)
+     * @see ClienteDAO#listar() 
+     * @see ClienteDAO#salvar(com.mycompany.floriculturapi.models.Cliente)
+     * 
+     */
      public static boolean alterar(Cliente obj){
         boolean retorno = false;
         Connection conexao = null ;
@@ -253,6 +305,17 @@ public class ClienteDAO {
         return retorno;
     }
      
+     /**
+      * Método que exclui um cliente do banco de dados
+      * @param idExcluir - Número inteiro que corresponde ao id do cliente no banco de dados
+      * @return boolean - True: Sucesso | False: Falha
+      * @see Cliente
+      * @see ClienteDAO#pesquisa(java.lang.String) 
+      * @see ClienteDAO#alterar(com.mycompany.floriculturapi.models.Cliente) 
+      * @see ClienteDAO#listar() 
+      * @see ClienteDAO#salvar(com.mycompany.floriculturapi.models.Cliente)
+      * 
+      */
      public static boolean excluir(int idExcluir){
         boolean retorno = false;
         Connection conexao = null ;

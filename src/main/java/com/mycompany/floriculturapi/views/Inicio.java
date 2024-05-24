@@ -7,7 +7,7 @@ package com.mycompany.floriculturapi.views;
 /**
  *
  * @author Pedro
- */////
+ */
 public class Inicio extends javax.swing.JFrame {
 
     /**
@@ -34,8 +34,11 @@ public class Inicio extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1000, 600));
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setMaximumSize(new java.awt.Dimension(1000, 600));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnProdutos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N

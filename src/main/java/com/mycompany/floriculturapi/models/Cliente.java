@@ -1,8 +1,15 @@
 package com.mycompany.floriculturapi.models;
-
 import java.util.Date;
 
+/**
+ * Classe Cliente, registra os dados de um cliente para um possivel CRUD
+ * 
+ * @author migue
+ * @see com.mycompany.floriculturapi.dao.ClienteDAO
+ */
 public class Cliente {
+    
+    //atributos
     private int idCliente;
     private String CPF;
     private String nomeCliente;    
@@ -13,6 +20,7 @@ public class Cliente {
     private String sexoCliente;
     private String estadoCivil;
     
+    //construtores
     public Cliente() {
     }
 
@@ -40,6 +48,7 @@ public class Cliente {
         this.estadoCivil = estadoCivil;
     }
 
+    //getters e setters
     public String getEstadoCivil() {
         return estadoCivil;
     }
@@ -52,7 +61,7 @@ public class Cliente {
     public int getIdCliente() {
         return idCliente;
     }
-
+    
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
     }

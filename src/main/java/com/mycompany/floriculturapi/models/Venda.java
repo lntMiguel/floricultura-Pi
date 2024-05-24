@@ -1,29 +1,33 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.floriculturapi.models;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
- *
- * @author migue
+ *Classe que registra os dados de uma venda, usando a DAO é possivel gravar os dados no banco de dados e gerar relatórios das vendas, ataualizar e consultar o estoque
+ * 
+ * @author miguel
+ * @see Cliente
+ * @see Produto
+ * @see com.mycompany.floriculturapi.dao.VendaDAO
+ * @see RelatorioAnalitico
+ * @see RelatorioSintetico
+ * @see ItemVenda
  */
 public class Venda {
-    
+    //atributos
     private int idVenda;
     private float valorVenda;
     private Date dataVenda;
     private int idCliente;
     
+    //atributo "especial" arraylist que contém os itens de uma venda 
     private ArrayList<ItemVenda> listaItens = new ArrayList<>();
 
     public Venda() {
     }
 
-    
+    //construtores
     public Venda(float valorVenda, Date dataVenda, int idCliente, ArrayList<ItemVenda> listaItens) {
         this.valorVenda = valorVenda;
         this.dataVenda = dataVenda;
@@ -38,7 +42,8 @@ public class Venda {
         this.idCliente = idCliente;
         this.listaItens = listaItens;
     }
-
+    
+    //getters e setters
     public int getIdVenda() {
         return idVenda;
     }

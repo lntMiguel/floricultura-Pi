@@ -11,7 +11,6 @@ import com.mycompany.floriculturapi.models.Cliente;
 import com.mycompany.floriculturapi.models.ItemVenda;
 import com.mycompany.floriculturapi.models.Produto;
 import com.mycompany.floriculturapi.models.Venda;
-import com.mycompany.floriculturapi.utils.Validador;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -78,6 +77,7 @@ public class Vendas extends javax.swing.JFrame {
         mnuRelatorios = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -273,7 +273,7 @@ public class Vendas extends javax.swing.JFrame {
                 String tipoProduto = modelo.getValueAt(i, 2).toString();
                 int qtdProduto = Integer.parseInt(modelo.getValueAt(i, 3).toString());
                 float valorUnitario = Float.parseFloat(modelo.getValueAt(i, 4).toString());
-
+                
                 novoItem = new ItemVenda(idProduto,qtdProduto,valorUnitario);
 
                 objVenda.getListaItens().add(novoItem);
@@ -319,6 +319,8 @@ public class Vendas extends javax.swing.JFrame {
                         }
                     }
                     valorTotal = 0;
+                    objVenda.getListaItens().clear();
+                    objVenda.setIdCliente(0);
                     limparCampos();
             }
             
@@ -429,7 +431,8 @@ public class Vendas extends javax.swing.JFrame {
         lblValorTotal.setText("");
         valorTotal = 0;
         spnQtd.setValue(0);
-        
+        objVenda.getListaItens().clear();
+        objVenda.setIdCliente(0);
         DefaultTableModel modelo = (DefaultTableModel) tblVendas.getModel();
         
         for(int i = modelo.getRowCount() - 1; i >= 0; i--){

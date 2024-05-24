@@ -5,11 +5,14 @@
 package com.mycompany.floriculturapi.models;
 
 /**
- *
+ *Classe que armazena dados dos itens de uma venda 
  * @author migue
+ * @see Produto
+ * @see Venda
+ * 
  */
 public class ItemVenda {
-    
+    //atributos
     private int idItemVenda;
     private int idVenda;
     private int idProduto;
@@ -17,7 +20,7 @@ public class ItemVenda {
     private float valorUnitario;
 
     
-    
+    //construtores
     public ItemVenda(int idVenda, int idProduto, int qtdProduto, float valorUnitario) {
         this.idVenda = idVenda;
         this.idProduto = idProduto;
@@ -35,6 +38,7 @@ public class ItemVenda {
         this.valorUnitario = valorUnitario;
     }
     
+    //getters e setters
     public int getIdItemVenda() {
         return idItemVenda;
     }

@@ -18,6 +18,7 @@ CREATE TABLE Cliente(
     telefoneCliente VARCHAR(14) NOT NULL,
     enderecoCliente VARCHAR(50) NOT NULL,
     dataNasc date NOT NULL,
+    estadoCivil varchar(30) NOT NULL,
     sexoCliente varchar(9),
     primary key (idCliente)
 );

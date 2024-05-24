@@ -1,14 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.floriculturapi.models;
 
 import java.util.Date;
 
 /**
- *
+ *Classe que registra os dados de um relatório sintético, usando a dao consegue-se gravar os dados no banco e fazer sua visualização
+ * 
  * @author migue
+ * @see com.mycompany.floriculturapi.dao.RelatorioSinteticoDAO
+ * @see Venda
+ * @see Cliente
  */
 public class RelatorioSintetico {
     

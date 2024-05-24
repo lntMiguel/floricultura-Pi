@@ -1,30 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.mycompany.floriculturapi.utils;
 
-/**
- *
- * @author migue
- */
+
 import com.mycompany.floriculturapi.dao.ClienteDAO;
 import com.mycompany.floriculturapi.models.Cliente;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.JFormattedTextField;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+
 /**
- *
- * @author fernando.tfernandes
+ * Classe que realiza as validações de um JframeForm
+ * @author migue
  */
 public class Validador {
-    
+    //Atributo que recebe todas as mensagens de erro
     public ArrayList<String> mensagensErro = new ArrayList<>();
     
     /**
@@ -39,10 +31,13 @@ public class Validador {
             if(txt.getText().trim().equals("")){
                 throw new IllegalArgumentException();
             }
+            //tento converter o numero
             float valorConvertido = Float.parseFloat(txt.getText());
             txt.setBackground(Color.WHITE);
             
-        }catch(NumberFormatException e){
+        }
+        //se a conversão não for bem sucedida exibir mensagem de erro
+        catch(NumberFormatException e){
         
             this.mensagensErro.add("Digite Apenas numeros");
             txt.setBackground(Color.red);
@@ -53,16 +48,26 @@ public class Validador {
     
     }
     
+    /**
+     * Valida o cpf de um cliente, verifica se há algum cpf digitado ou se este cpf existe no banco de dados
+     * @param cpf Recebe um JFormattedTextField que contém o cpf do cleinte
+     * 
+     * @see com.mycompany.floriculturapi.models.Cliente
+     * @see com.mycompany.floriculturapi.dao.ClienteDAO
+     */
     public void validarCPF(JFormattedTextField cpf){
         cpf.setBackground(Color.WHITE);
+        //verificar se o campo está vazio
         if("   .   .   -  ".equals(cpf.getText())){
              this.mensagensErro.add("Digite um CPF");
              cpf.setBackground(Color.red);
         }
+        //se não estiver vazio, verifica se o cliente existe no bd
         else{
             String cpfConsulta = cpf.getText();
             Cliente clientePesquisa = ClienteDAO.pesquisa(cpfConsulta);
             
+            //se o Objeto Cliente voltar preenchido, quer dizer que este CPF ja está cadastrado 
             if(clientePesquisa != null){
                 this.mensagensErro.add("Erro: CPF já cadastrado");
                 cpf.setBackground(Color.red);
@@ -71,19 +76,32 @@ public class Validador {
         
         
     }
+    
     /**
-     * Valida somente campos texto
-     * @param txt Recebe um objeto do tipo JTextField
+     * Valida o telefone do cliente, verifica um telefone foi digitado
+     * @param tel - recebe um JFormattedTextField
+     * 
+     * @see com.mycompany.floriculturapi.models.Cliente
+     * @see Validador#validarCPF(javax.swing.JFormattedTextField) 
+     * @see Validador#validarTexto(javax.swing.JTextField) 
+     * @see Validador#validarNumero(javax.swing.JTextField) 
      */
     
     public void validarTelefone(JFormattedTextField tel){
-        tel.setBackground(Color.WHITE); 
+        tel.setBackground(Color.WHITE);
         if("(  )     -    ".equals(tel.getText())){
              this.mensagensErro.add("Digite um telefone");
              tel.setBackground(Color.red);
         }
     }
     
+    /**
+     * Valida um campo de texto, verifica se o campo está vazio
+     * @param txt Recebe um JTextField 
+     * @see Validador#validarCPF(javax.swing.JFormattedTextField)
+     * @see Validador#validarTelefone(javax.swing.JFormattedTextField) 
+     * @see Validador#validarNumero(javax.swing.JTextField) 
+     */
      public void validarTexto(JTextField txt){
      
          try{
@@ -102,6 +120,10 @@ public class Validador {
      
      }
      
+     /**
+      * Valida se há botões selecionados
+      * @param bg - recebe um ButtonGroup
+      */
      public void validarBotao(ButtonGroup bg){
          //resgato o numero de botões
          int grupoDeBotoes = bg.getButtonCount();
@@ -129,32 +151,22 @@ public class Validador {
          }
      }
      
-     
+     /**
+      * Limpa as mensagens do arraylist mensagensDeErro
+      * @see Validador#getMensagensErro() 
+      * @see Validador#hasErro() 
+      */
      public void limparMensagens(){
      
          this.mensagensErro.clear();
      }
      
-     /**@deprecated substituida por {@link #getMensagensErro()}
-      * Método para exibir mensagens de erro na tela com JOptionPane
-      */
-     public void ExibirMensagensErro(){
-         
-        String errosFormulario = "";
-        for (String msg : this.mensagensErro) {
-            errosFormulario += msg + "\n";
-        }
-        
-        if(!errosFormulario.equals("")){
-            JOptionPane.showMessageDialog(null, errosFormulario);
-            this.limparMensagens();
-        }     
-
-     }
      
      /**
       * Resgata todos os erros gerados em uma única String
       * @return 
+      * @see Validador#hasErro() 
+      * @see Validador#limparMensagens() 
       */
      public String getMensagensErro(){
          
@@ -173,6 +185,12 @@ public class Validador {
         
      }
      
+     /**
+      * Verifica de todos os campos foram preenchidos corretamente
+      * @return boolean True: Há erros | False: Não há erros
+      * @see Validador#getMensagensErro() 
+      * @see Validador#limparMensagens() 
+      */
      public boolean hasErro(){
      
          if(this.mensagensErro.size()>0){
@@ -182,6 +200,10 @@ public class Validador {
          }
      }
 
+     /**
+      * Valida datas, verifica de uma data foi selecionada
+      * @param data - recebe um JDateChooser
+      */
     public void validarData(JDateChooser data) {
         try{
              

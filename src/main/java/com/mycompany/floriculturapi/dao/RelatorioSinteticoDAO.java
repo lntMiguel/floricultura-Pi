@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.floriculturapi.dao;
 
 import com.mycompany.floriculturapi.models.RelatorioSintetico;
@@ -13,8 +9,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- *
+ *Classe que faz a conexão de um objeto do tipo RelatorioSintetico com o banco de dados
+ * 
  * @author migue
+ * @see RelatorioSintetico
  */
 public class RelatorioSinteticoDAO {
     
@@ -22,6 +20,13 @@ public class RelatorioSinteticoDAO {
     static String login = "root";
     static String senha = "adminadmin";
 
+    /**
+     * Método que lista todos os relatórios sintéticos com base em um período
+     * @param dataInicio - Tipo Date - Data de incio do período desejado
+     * @param dataTermino - Tipo Date - Data de termino do período desejado
+     * @return ArrayList - Retorna um ArrayList da clasee RelatorioSintetico contendo todos os relatórios sintéticos entre o período informado 
+     * @see RelatorioSintetico
+     */
     public static ArrayList<RelatorioSintetico> listarPorPeriodo(Date dataInicio, Date dataTermino){
         
         Connection conexao = null;

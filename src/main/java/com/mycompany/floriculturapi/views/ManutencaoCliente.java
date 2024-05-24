@@ -4,19 +4,10 @@ import com.mycompany.floriculturapi.dao.ClienteDAO;
 import com.mycompany.floriculturapi.models.Cliente;
 import com.mycompany.floriculturapi.utils.Validador;
 import java.awt.event.KeyEvent;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-
 
 /**
  *
@@ -31,8 +22,8 @@ public class ManutencaoCliente extends javax.swing.JFrame {
      */
     public ManutencaoCliente() {
         initComponents();
+        atualizarTabela();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -82,6 +73,7 @@ public class ManutencaoCliente extends javax.swing.JFrame {
         mnuProdutos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1000, 600));
@@ -295,12 +287,18 @@ public class ManutencaoCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEmailActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        
+        //Pegar linha selecionada
         int linhaSelecionada = tblClientes.getSelectedRow();
+        
+        //se alguma linha for selecionada
         if(linhaSelecionada >= 0){
             
+            //pega o modelo da tabela
             DefaultTableModel modeloTabela = (DefaultTableModel) tblClientes.getModel();          
+            
+            //pega o id do cliente
             int idExcluir = Integer.parseInt(modeloTabela.getValueAt(linhaSelecionada,0).toString());
+            
             //chamar dao para excluir;
             boolean retorno = ClienteDAO.excluir(idExcluir);
             
@@ -312,13 +310,24 @@ public class ManutencaoCliente extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Erro ao deletar cliente!");
         }
         
+        //se não selecionou nenhuma linha
+        else{
+            JOptionPane.showMessageDialog(rootPane, "Selecione uma linha para excluir");
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
+    /**
+     * Atualiza a tabela com todos os clientes
+     */
     public void atualizarTabela(){
+        
         ArrayList<Cliente> lista = ClienteDAO.listar();
+        //pega o modelo da tabela
         DefaultTableModel modeloTabela = (DefaultTableModel) tblClientes.getModel();
+        
         modeloTabela.setRowCount(0);
         
+        //preenchendo as linhas ta tabela
         for(Cliente item : lista){
             
             modeloTabela.addRow(new String[]{
@@ -338,6 +347,7 @@ public class ManutencaoCliente extends javax.swing.JFrame {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         //se tiver em alteração
         if(objAlterar != null){
+            //validando campos
             Validador objValidador = new Validador();
             objValidador.validarTexto(txtNome);
             objValidador.validarTexto(txtEmail);
@@ -348,65 +358,69 @@ public class ManutencaoCliente extends javax.swing.JFrame {
             objValidador.validarTexto(txtTelefone);
             objValidador.validarData(dcDataNasc);
             
-            
+            //verifica se teve erros
             if(objValidador.hasErro()){
                    JOptionPane.showMessageDialog(rootPane, objValidador.getMensagensErro());
                }
+            
             else{
+            
                 //resgatar dados
-            String nome = txtNome.getText() ;
-            String email = txtEmail.getText();
-            String telefone = txtTelefone.getText();
-            String sexo;
-            String endereco = txtEndereco.getText();
-            Date dataNasc = dcDataNasc.getDate();
-            String estadoCivil;
-            
-            if(rbMasc.isSelected())
-                sexo = "Masculino";
-            
-            else if(rbFem.isSelected())        
-                sexo = "Feminino";
+                String nome = txtNome.getText() ;
+                String email = txtEmail.getText();
+                String telefone = txtTelefone.getText();
+                String sexo;
+                String endereco = txtEndereco.getText();
+                Date dataNasc = dcDataNasc.getDate();
+                String estadoCivil;
 
-            else
-                sexo = "Outro";
-            
-            if(rbCasado.isSelected())
-                estadoCivil = "Casado";
-            
-            else 
-                estadoCivil = "Solteiro";
-            
-            objAlterar.setDataNasc(dataNasc);
-            objAlterar.setEmailCliente(email);
-            objAlterar.setEnderecoCliente(endereco);
-            objAlterar.setSexoCliente(sexo);
-            objAlterar.setNomeCliente(nome);
-            objAlterar.setTelefoneCliente(telefone);
-            objAlterar.setEstadoCivil(estadoCivil);
-            //incluir dao
-            boolean retornoAlteracao = ClienteDAO.alterar(objAlterar);
-            
-            if(retornoAlteracao){
-                JOptionPane.showMessageDialog(rootPane, "Dados Alterados com sucesso!");
-                //limpar campos
-                objAlterar = null;
-                txtNome.setText("");
-                txtCPF.setText("");
-                txtEmail.setText("");
-                txtTelefone.setText("");
-                txtEndereco.setText("");
-                rbMasc.setSelected(false);
-                rbFem.setSelected(false);
-                rbOutro.setSelected(false);
-                rbCasado.setSelected(false);
-                rbSolteiro.setSelected(false);
-                atualizarTabela();
-            }
-            else
-                JOptionPane.showMessageDialog(rootPane, "Falha ao alterar os dados!");
-            }
-            
+                if(rbMasc.isSelected())
+                    sexo = "Masculino";
+
+                else if(rbFem.isSelected())        
+                    sexo = "Feminino";
+
+                else
+                    sexo = "Outro";
+
+                if(rbCasado.isSelected())
+                    estadoCivil = "Casado";
+
+                else 
+                    estadoCivil = "Solteiro";
+                
+                //mandando dados para o obj de alteração
+                objAlterar.setDataNasc(dataNasc);
+                objAlterar.setEmailCliente(email);
+                objAlterar.setEnderecoCliente(endereco);
+                objAlterar.setSexoCliente(sexo);
+                objAlterar.setNomeCliente(nome);
+                objAlterar.setTelefoneCliente(telefone);
+                objAlterar.setEstadoCivil(estadoCivil);
+                
+                //Chamando a DAO para alterar
+                boolean retornoAlteracao = ClienteDAO.alterar(objAlterar);
+
+                
+                if(retornoAlteracao){
+                    JOptionPane.showMessageDialog(rootPane, "Dados Alterados com sucesso!");
+                    //limpar campos
+                    objAlterar = null;
+                    txtNome.setText("");
+                    txtCPF.setText("");
+                    txtEmail.setText("");
+                    txtTelefone.setText("");
+                    txtEndereco.setText("");
+                    rbMasc.setSelected(false);
+                    rbFem.setSelected(false);
+                    rbOutro.setSelected(false);
+                    rbCasado.setSelected(false);
+                    rbSolteiro.setSelected(false);
+                    atualizarTabela();
+                }
+                else
+                    JOptionPane.showMessageDialog(rootPane, "Falha ao alterar os dados!");
+                }    
         }
         
         //se tiver em inclusão

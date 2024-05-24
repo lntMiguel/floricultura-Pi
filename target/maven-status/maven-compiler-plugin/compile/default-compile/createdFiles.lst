@@ -13,11 +13,13 @@ com\mycompany\floriculturapi\dao\RelatorioAnaliticoDAO.class
 com\mycompany\floriculturapi\views\ManutencaoCliente$1.class
 com\mycompany\floriculturapi\views\ManutencaoCliente$12.class
 com\mycompany\floriculturapi\views\ProdutoManutencao$11.class
+com\mycompany\floriculturapi\views\package-info.class
 com\mycompany\floriculturapi\views\ProdutoManutencao$6.class
 com\mycompany\floriculturapi\views\ProdutoManutencao.class
 com\mycompany\floriculturapi\views\ProdutoManutencao$8.class
 com\mycompany\floriculturapi\views\Relatorio$8.class
 com\mycompany\floriculturapi\models\RelatorioSintetico.class
+com\mycompany\floriculturapi\utils\package-info.class
 com\mycompany\floriculturapi\models\RelatorioAnalitico.class
 com\mycompany\floriculturapi\models\Venda.class
 com\mycompany\floriculturapi\views\ManutencaoCliente$3.class
@@ -52,6 +54,7 @@ com\mycompany\floriculturapi\models\Produto.class
 com\mycompany\floriculturapi\views\Relatorio$7.class
 com\mycompany\floriculturapi\views\Relatorio$4.class
 com\mycompany\floriculturapi\dao\RelatorioSinteticoDAO.class
+com\mycompany\floriculturapi\models\package-info.class
 com\mycompany\floriculturapi\views\ManutencaoCliente$6.class
 com\mycompany\floriculturapi\views\Inicio$3.class
 com\mycompany\floriculturapi\views\ProdutoManutencao$3.class
@@ -64,6 +67,7 @@ com\mycompany\floriculturapi\views\ManutencaoCliente$11.class
 com\mycompany\floriculturapi\views\Relatorio$6.class
 com\mycompany\floriculturapi\views\Vendas$11.class
 com\mycompany\floriculturapi\views\ManutencaoCliente$5.class
+com\mycompany\floriculturapi\dao\package-info.class
 com\mycompany\floriculturapi\views\ProdutoManutencao$7.class
 com\mycompany\floriculturapi\views\Vendas$9.class
 com\mycompany\floriculturapi\views\Relatorio$3.class

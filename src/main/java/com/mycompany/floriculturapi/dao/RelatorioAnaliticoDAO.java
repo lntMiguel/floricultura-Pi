@@ -1,17 +1,18 @@
 package com.mycompany.floriculturapi.dao;
 
 import com.mycompany.floriculturapi.models.RelatorioAnalitico;
-import com.mycompany.floriculturapi.models.RelatorioSintetico;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
+
 
 /**
- *
+ *Classe que faz a conexão de um objeto do tipo RelatorioAnalitico com o banco de dados
+ * 
  * @author migue
+ * @see RelatorioAnalitico
  */
 public class RelatorioAnaliticoDAO {
     
@@ -19,6 +20,14 @@ public class RelatorioAnaliticoDAO {
     static String login = "root";
     static String senha = "adminadmin";
 
+    /**
+     * Método que lista o relatório anaalitico desejado com base no Id da venda
+     * @param idVenda - Número inteiro correspondente ao id da venda realizada
+     * @return ArrayList - ArrayList da classe RelatorioAnalitico contendo o relatório analitico correspontente ao id informado
+     * @see RelatorioAnalitico
+     * @see RelatorioAnaliticoDAO#listarPorVenda(int) 
+     * 
+     */
     public static ArrayList<RelatorioAnalitico> listarPorVenda(int idVenda){
         
         Connection conexao = null;

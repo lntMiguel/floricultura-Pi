@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.floriculturapi.dao;
 
 import com.mycompany.floriculturapi.models.ItemVenda;
@@ -15,14 +11,24 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ *Classe que realiza a conexão das vendas com o banco de dados
+ * 
  * @author migue
+ * @see Venda
  */
 public class VendaDAO {
     static String url = "jdbc:mysql://localhost:3306/floriculturapi";
     static String login = "root";
     static String senha = "adminadmin";
     
+    /**
+     * Método que registra uma venda no banco de dados
+     * @param obj - Objeto do tipo Venda
+     * @return boolean True: Sucesso | False: Falha
+     * @see Venda
+     * @see VendaDAO#atualizarEstoque(int, int)
+     * @see VendaDAO#consultarEstoque(int) 
+     */
     public static boolean salvar(Venda obj){
         
         Connection conexao = null;
@@ -78,6 +84,15 @@ public class VendaDAO {
         return retorno;
     }
     
+    /**
+     * Método que atualiza a quantidade de itens de um produto no estoque
+     * @param idProduto - Inteiro que está relacionado ao id do produto o qual deve-se atualizar a quantidade de produtos no estoque
+     * @param qtdNova - Inteiro que condiz a quantidade de produtos que deve haver no estoque após a venda
+     * @return boolean True: Sucesso | False: Falha
+     * @see Venda 
+     * @see VendaDAO#salvar(com.mycompany.floriculturapi.models.Venda) 
+     * @see VendaDAO#consultarEstoque(int) 
+     */
     public static boolean atualizarEstoque(int idProduto, int qtdNova){
         boolean retorno = false;
         Connection conexao = null;
@@ -114,6 +129,14 @@ public class VendaDAO {
         return retorno;
     }
     
+    /**
+     * Método que consulta a quanditade de um respectivo produto no estoque com base no seu id
+     * @param idProduto - Inteiro que está relacionado ao id do produto no banco de dados
+     * @return int - retorna um valor >= 0 caso o produto exista no estoque | retorna -1 caso o produto não exista no estoque ou caso haja algum erro na conexão com o banco de dados
+     * @see Venda 
+     * @see VendaDAO#salvar(com.mycompany.floriculturapi.models.Venda) 
+     * @see VendaDAO#atualizarEstoque(int, int) 
+     */
     public static int consultarEstoque(int idProduto){
         
         Connection conexao = null;
@@ -129,8 +152,6 @@ public class VendaDAO {
             comandoSQL.setInt(1, idProduto);
             
             rs = comandoSQL.executeQuery();
-            
-            
             
             if(rs != null){
               while(rs.next()){

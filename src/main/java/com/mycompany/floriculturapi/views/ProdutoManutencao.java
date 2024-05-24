@@ -23,6 +23,7 @@ public class ProdutoManutencao extends javax.swing.JFrame {
      */
     public ProdutoManutencao() {
         initComponents();
+        atualizarTabela();
     }
     
     /**
@@ -61,6 +62,7 @@ public class ProdutoManutencao extends javax.swing.JFrame {
         mnuVendas = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -131,7 +133,7 @@ public class ProdutoManutencao extends javax.swing.JFrame {
         });
         jPanel2.add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 32, 260, 25));
 
-        cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Flor", "Planta", "Substrato", "Acessório p/ Jardim" }));
+        cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Flor", "Planta", "Substrato", "Acessório p/ Jardim", "Buquê", "Sementes" }));
         jPanel2.add(cbTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 140, 30));
 
         lbTipo.setText("Tipo");
@@ -369,6 +371,11 @@ public class ProdutoManutencao extends javax.swing.JFrame {
                 else
                     JOptionPane.showMessageDialog(rootPane, "Erro ao deletar Produto!");
             }
+           
+           else{
+               JOptionPane.showMessageDialog(rootPane, "Selecione uma linha para excluir");
+
+           }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void mnuInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuInicioActionPerformed
